@@ -1,0 +1,175 @@
+<script type="text/javascript">
+
+$(function(){
+  var socket = io.connect('http://127.0.0.1:3001/');
+  // var socket = io.connect('http://10.18.82.75:3001/');
+  socket.on('message', function (data) {
+    data = JSON.parse(data);
+    console.log(data);
+      $('#Option_1').html(data[0]);
+      $('#Option_2').html(data[1]);
+      $('#Option_3').html(data[2]);
+      $('#Option_4').html(data[3]);
+      updateBarPlot0(data[0]);
+      updateBarPlot1(data[1]);
+      updateBarPlot2(data[2]);
+      updateBarPlot3(data[3]);
+  });
+});
+
+$(document).ready(function () {
+  loadData();
+});
+
+var loadData = function() {
+  $.ajax({
+    type: 'GET',
+    contentType: 'application/json; charset=utf-8',
+    url: '/data',
+    dataType: 'json',
+    success: function(data) {
+      document.getElementById("Option_1").innerHTML = data[0];
+      document.getElementById("Option_2").innerHTML = data[1];
+      document.getElementById("Option_3").innerHTML = data[2];
+      document.getElementById("Option_4").innerHTML = data[3];
+      drawBarPlot0(data[0]);
+      drawBarPlot1(data[1]);
+      drawBarPlot2(data[2]);
+      drawBarPlot3(data[3]);
+      // var graphData = data;
+      // var dataLength = data.length;
+      // for (var i = 0; i < dataLength; i++) {
+      //   drawBarPlot(data[i]);
+      // }
+    },
+    error: function(data)  {
+      error();
+    }
+  });
+};
+
+function drawBarPlot0(data) {
+  var d = [data];
+  d3.select('#Key_1')
+    .append('svg')
+    .attr('id', '1')
+    .data(d)
+    .style('width', function (d) {
+      return (d*0.5) + '%';
+    })
+    .style('height', '30px')
+    .style('background', 'red');
+}
+
+function drawBarPlot1(data) {
+  var d = [data];
+  d3.select('#Key_2')
+    .append('svg')
+    .attr('id', '2')
+    .data(d)
+    .style('width', function (d) {
+      return (d*0.5) + '%';
+    })
+    .style('height', '30px')
+    .style('background', 'green');
+}
+
+function drawBarPlot2(data) {
+  var d = [data];
+  d3.select('#Key_3')
+    .append('svg')
+    .attr('id', 3)
+    .data(d)
+    .style('width', function (d) {
+      return (d*0.5) + '%';
+    })
+    .style('height', '30px')
+    .style('background', 'blue');
+}
+
+function drawBarPlot3(data) {
+  var d = [data];
+  d3.select('#Key_4')
+    .append('svg')
+    .data(d)
+    .attr('id', 4)
+    .style('width', function (d) {
+      return (d*0.5) + '%';
+    })
+    .style('height', '30px')
+    .style('background', 'orange');
+}
+
+function updateBarPlot0(data) {
+  var d = [data];
+  d3.select('#Key_1').select('svg')
+    .attr('id', '1')
+    .data(d)
+    .style('width', function (d) {
+      return (d*0.5) + '%';
+    });
+}
+
+function updateBarPlot1(data) {
+  var d = [data];
+  d3.select('#Key_2').select('svg')
+    .attr('id', '2')
+    .data(d)
+    .style('width', function (d) {
+      return (d*0.5) + '%';
+    });
+}
+
+function updateBarPlot2(data) {
+  var d = [data];
+  d3.select('#Key_3').select('svg')
+    .attr('id', '3')
+    .data(d)
+    .style('width', function (d) {
+      return (d*0.5) + '%';
+    });
+}
+
+function updateBarPlot3(data) {
+  var d = [data];
+  d3.select('#Key_4').select('svg')
+    .attr('id', '4')
+    .data(d)
+    .style('width', function (d) {
+      return (d*0.5) + '%';
+    });
+}
+
+</script>
+
+<div class="container">
+  <div class="row">
+    <div class="col-md-4">
+      <div class="container">
+        <h2><%= @poll.title %></h2>
+      </div>
+      <div class="panel panel-default">
+        <ol class="list-group">
+          <%= form_for (@vote) do |f| %>
+            <% @options.each do |key, value| %>
+              <% @i += 1 %>
+              <li class="list-group-item">
+                <%= f.radio_button :option, key, :class=> "btn" %>
+                <%= value %>
+                <div class="pull-right">
+                  <label id="Option_<%= @i %>"></label>
+                </div>
+                <p><h3 id="Key_<%= @i %>"></h3></p>
+              </li>
+            <%end%>
+        </ol>
+            <div class="col-md-2 col-md-offset-4">
+               <%= f.submit "vote", data: {disable_with: "submitting..."}, class: 'btn btn-primary' %>
+            </div>
+          <%end%>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div id="plot"></div>

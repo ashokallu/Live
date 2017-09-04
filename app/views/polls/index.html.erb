@@ -1,0 +1,11 @@
+<div class="page-header">
+	<h1>Home</h1>
+</div>
+
+<div class="container">
+	Total Votes <h4 id="count"><%= current_user.votes.size %></h4>
+</div><br><br>
+
+<%= render @polls %>
+
+<%= link_to "New Poll", new_poll_path, class: "btn btn-primary" %>

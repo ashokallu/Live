@@ -1,0 +1,32 @@
+<%= form_for (@user) do |f| %>
+	<% if @user.errors.any? %>
+		<div class="alert alert-danger">
+			<strong>
+				<%= pluralize(@user.errors.count, 'error') %> Prevented the User Sign Up:
+			</strong>
+		</div>
+		<ul>
+			<% @user.errors.full_messages.each do |msg| %>
+				<li><%= msg %></li><br>
+			<%end%>
+		</ul>
+	<%end%>
+
+	<div class="form-group">
+		<%= f.label :email %>
+		<%= f.text_field :email, class: 'form-control' %>
+	</div>
+
+	<div class="form-group">
+		<%= f.label :password %>
+		<%= f.password_field :password, class: 'form-control' %>
+	</div>
+
+	<div class="form-group">
+		<%= f.label :password_confirmation %>
+		<%= f.password_field :password_confirmation, class: 'form-control' %>
+	</div>
+
+	<%= f.submit data: {disable_with: 'submitting..'}, class: 'btn btn-primary' %>
+
+<%end%>

@@ -1,0 +1,40 @@
+<%= form_for (@poll.with_blank_options) do |f| %>
+  <% if @poll.errors.any? %>
+    <p><%= pluralize(@poll.errors.count, "error") %> prevented this Poll creation </p>
+    <div class="errors">
+      <ul class="list">
+        <% @poll.errors.full_messages.each do |msg| %>
+          <li class="message"><%= msg %></li><br>
+        <%end%>
+      </ul>
+    </div>
+  <%end%>
+
+<div class="container">
+  <div class="row">
+    <div class="col-md-4">
+        <div class="panel panel-default">
+          <ul class="list-group">
+          <li class="list-group-item">
+          <div class="title-input">
+            <%= f.label :title %>:&emsp;
+            <%= f.text_field :title, :required => true %>
+          </div>
+          </li>
+          </ul>
+          <ul class="list-group">
+            <li class="list-group-item">
+              <%= f.fields_for (:options) do |option| %>
+                <%= option.label :option %>:
+                <%= option.text_field :title, :required => true%><br><br>
+              <%end%>
+            </li>
+          </ul>
+          <div class="btn">
+            <%= f.submit data: {disable_with: "submitting..."} %>
+          </div>
+        <%end%>
+      </div>
+    </div>
+  </div>
+</div>

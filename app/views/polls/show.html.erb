@@ -1,0 +1,55 @@
+<script type="text/javascript">
+$(function () {
+ $("#myDialog").dialog();
+});
+</script>
+
+<!-- <div class="container">
+  <div class="row">
+    <div class="col-md-4">
+        <div class="panel panel-heading">
+        <h2><%= @poll.title %></h2>
+        <div class="panel panel-default">
+          <ul class="list-group">
+            <% @poll.options.order('id ASC').each do |opt| %>
+            <li class="list-group-item"><%= opt.title %>
+              <div class="pull-right">
+                <label class="votes-count"><%= opt.votes.size %></label>
+              </div>
+            </li>
+            <%end%>
+          </ul>
+        </div>
+        <div class="col-md-2 col-md-offset-4">
+          <%= link_to "Vote", new_vote_path, data: { turbolinks: 'false'}, class: 'btn btn-primary' %>
+        </div>
+      </div>
+    </div>
+  </div>
+</div> -->
+
+<div id="myDialog">
+  <div class="container">
+  <div class="row">
+    <div class="col-md-4">
+        <div class="panel panel-heading">
+        <h2><%= @poll.title %></h2>
+        <div class="panel panel-default">
+          <ul class="list-group">
+            <% @poll.options.order('id ASC').each do |opt| %>
+            <li class="list-group-item"><%= opt.title %>
+              <div class="pull-right">
+                <label class="votes-count"><%= opt.votes.size %></label>
+              </div>
+            </li>
+            <%end%>
+          </ul>
+        </div>
+        <div class="col-md-2 col-md-offset-4">
+          <%= link_to "Vote", new_vote_path, data: { turbolinks: 'false'}, class: 'btn btn-primary' %>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+</div>
